@@ -1,6 +1,6 @@
 package modele;
 
-import application.SimuFourmis;
+import application.SimuDrone;
 
 import java.util.ArrayList;
 
@@ -22,14 +22,14 @@ public class Environnement {
 
 
     /**lien vers l'application graphiquue*/
-    SimuFourmis application;
+    SimuDrone application;
 
 
     /**
      * constructeur initialisant l'application et la taille,
      * la grille et la liste des fourmis
      */
-    public Environnement(SimuFourmis application, int taille) {
+    public Environnement(SimuDrone application, int taille) {
         this.application = application;
         this.taille = taille;
         grille = new Parcelle[taille][taille];

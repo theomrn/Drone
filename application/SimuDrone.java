@@ -16,7 +16,7 @@ import modele.Parcelle;
 import modele.Environnement;
 
 
-    public class SimuFourmis extends Application {
+    public class SimuDrone extends Application {
     /**
      * environnement liee a cet objet graphique
      */
