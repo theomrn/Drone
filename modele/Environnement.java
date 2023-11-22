@@ -67,7 +67,6 @@ public class Environnement {
 
     public void avancer() {
         lesDrones.forEach(Drone::errer);
-        intrus.forEach(Intrus::errer);
     }
 
     /**cree et ajoute un drone initialisee dans la case x,y

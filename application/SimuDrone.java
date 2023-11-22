@@ -11,14 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modele.Drone;
-import modele.Intrus;
-import modele.Parcelle;
-import modele.Environnement;
+import modele.*;
 
 
-
-    public class SimuDrone extends Application {
+public class SimuDrone extends Application {
     /**
      * environnement liee a cet objet graphique
      */
@@ -82,6 +78,7 @@ import modele.Environnement;
         {
             addDrone();
         }
+        addIntrus();
         Intrus intrus = evt.getIntrus();
         Circle dessinIntrus = intrus.getDessin();
         dessinIntrus.requestFocus();
@@ -89,19 +86,19 @@ import modele.Environnement;
             System.err.println(e.getCode());
             switch(e.getCode()) {
                 case UP ->{
-                    intrus.setDirection(d.NORD);
+                    intrus.setDirection(Direction.N);
                     intrus.bougerVersDirection();
                 }
                 case LEFT -> {
-                    intrus.setDirection(d.OUEST);
+                    intrus.setDirection(Direction.O);
                     intrus.bougerVersDirection();
                 }
                 case DOWN -> {
-                    intrus.setDirection(d.SUD);
+                    intrus.setDirection(Direction.S);
                     intrus.bougerVersDirection();
                 }
                 case RIGHT -> {
-                    intrus.setDirection(d.EST);
+                    intrus.setDirection(Direction.E);
                     intrus.bougerVersDirection();
                 }
             }
@@ -124,16 +121,6 @@ import modele.Environnement;
             default->System.out.println("touche percue = " + touche);
         }
     }
-
-        void agirSelonTouche2(String touche, Timeline chrono)
-        {
-            switch (touche)
-            {
-                case "z"->chrono.play();
-                case "s"->chrono.stop();
-                default->System.out.println("touche percue = " + touche);
-            }
-        }
 
     /**
      * creation des parcelles de la grille, et de leurs images
