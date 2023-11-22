@@ -17,6 +17,7 @@ import modele.Parcelle;
 import modele.Environnement;
 
 
+
     public class SimuDrone extends Application {
     /**
      * environnement liee a cet objet graphique
@@ -77,12 +78,34 @@ import modele.Environnement;
         littleCycle.play();
         //ecoute de evenements claviers
         scene.setOnKeyTyped(e->agirSelonTouche( e.getCharacter(), littleCycle));
-        //ecoute de evenements souris
         for(int i=0;i<nbdrone;i++)
         {
             addDrone();
         }
-        addIntrus();
+        Intrus intrus = evt.getIntrus();
+        Circle dessinIntrus = intrus.getDessin();
+        dessinIntrus.requestFocus();
+        dessinIntrus.setOnKeyPressed(e->{
+            System.err.println(e.getCode());
+            switch(e.getCode()) {
+                case UP ->{
+                    intrus.setDirection(d.NORD);
+                    intrus.bougerVersDirection();
+                }
+                case LEFT -> {
+                    intrus.setDirection(d.OUEST);
+                    intrus.bougerVersDirection();
+                }
+                case DOWN -> {
+                    intrus.setDirection(d.SUD);
+                    intrus.bougerVersDirection();
+                }
+                case RIGHT -> {
+                    intrus.setDirection(d.EST);
+                    intrus.bougerVersDirection();
+                }
+            }
+        });
     }
 
     /**
@@ -101,6 +124,16 @@ import modele.Environnement;
             default->System.out.println("touche percue = " + touche);
         }
     }
+
+        void agirSelonTouche2(String touche, Timeline chrono)
+        {
+            switch (touche)
+            {
+                case "z"->chrono.play();
+                case "s"->chrono.stop();
+                default->System.out.println("touche percue = " + touche);
+            }
+        }
 
     /**
      * creation des parcelles de la grille, et de leurs images

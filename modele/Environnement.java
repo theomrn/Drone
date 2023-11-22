@@ -1,6 +1,7 @@
 package modele;
 
 import application.SimuDrone;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,7 @@ public class Environnement {
         intrus.forEach(Intrus::errer);
     }
 
-    /**cree et ajoute une fourmi initialisee dans la case x,y
+    /**cree et ajoute un drone initialisee dans la case x,y
      * @return la fourmis creee*/
     public Drone addDrone(int x, int y)
     {
@@ -82,6 +83,14 @@ public class Environnement {
         Intrus f = new Intrus(this, x, y);
         intrus.add(f);
         return f;
+    }
+
+    public Intrus getIntrus(){
+        return intrus.get(0);
+    }
+
+    public Circle getDessin(){
+        return intrus.get(0).getDessin();
     }
 
     /**
