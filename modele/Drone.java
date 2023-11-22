@@ -25,10 +25,6 @@ public class Drone {
 
     /**sa representation graphique associee (simple cercle)*/
     Circle circle;
-    private Object Fourmi;
-
-    /**constructeur par defaut, inutilise */
-    public Drone() { }
 
     public Drone(Environnement  evt, int x, int y) {
         this.evt = evt;

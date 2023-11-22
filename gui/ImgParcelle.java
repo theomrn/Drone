@@ -41,14 +41,8 @@ public class ImgParcelle  {
     public ImgParcelle(Group troupe, Parcelle parcelle, int x, int y, int dim) {
         this.parcelle = parcelle;
         elt = new Rectangle(x,y,dim, dim);
-
-        phero = new Rectangle(x,y,dim, dim);
-        phero.setOpacity(0);
         troupe.getChildren().add(elt);
     }
-
-    /**definit l'opacite de la case phero selon le degre de pheromone de la cellule*/
-
 
     /**choisit la couleur de l'elt selon la nature de la parcelle */
     public void choisirCouleur()

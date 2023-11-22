@@ -8,14 +8,14 @@ import java.util.Random;
  * enumeration codant les directions d'une rose des vents
  * N, NE, E, SE, S, SO, O, NO
  * chaque enumeration contient son vecteur directeur
- * (ex. un deplacement N implique un déplacement de 0 en x, -1 en y
- * un deplacement SE implique un déplacement de 1 en x, 1 en y)
+ * (ex. un deplacement N implique un dï¿½placement de 0 en x, -1 en y
+ * un deplacement SE implique un dï¿½placement de 1 en x, 1 en y)
  */
 public enum Direction {N(0,-1), NE(1,-1), E(1,0), SE(1,1), S(0,1), SO(-1,1), O(-1,0), NO(-1,-1);
     int x;
     int y;
     /**objet utilise pour choix aleatoire*/
-    static Random r= new Random();
+    static Random r = new Random();
 
     /**constructeur initalisant les donnees du vecteur directeur*/
     Direction(int x, int y) {this.x = x; this.y = y;}
@@ -29,6 +29,7 @@ public enum Direction {N(0,-1), NE(1,-1), E(1,0), SE(1,1), S(0,1), SO(-1,1), O(-
         no = (no +h+ 8)%8;
         return Direction.values()[no];
     }
+
 
     /**retourne une direction au hasard*/
     static Direction getRandom() {
