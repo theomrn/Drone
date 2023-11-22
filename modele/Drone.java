@@ -40,6 +40,10 @@ public class Drone {
     {
         d = d.nextDirection();
         parcelle = getParcelleDir(d);
+        while (parcelle.getType()==TypeParcelle.Arbre){
+            d = d.nextDirection();
+            parcelle = getParcelleDir(d);
+        }
         evt.bouger(this);
     }
 

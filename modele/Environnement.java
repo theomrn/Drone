@@ -15,6 +15,8 @@ public class Environnement {
     Parcelle[][] grille;
     /** taille de la grille */
     int taille;
+    /* % d'arbres */ 
+    double aleaArbres = 0.15;
 
     /**les fourmis presentes*/
     ArrayList<Drone> lesDrones;
@@ -45,7 +47,7 @@ public class Environnement {
         for (int i = 0; i < taille; i++)
             for (int j = 0; j < taille; j++) {
                 grille[i][j] = new Parcelle(grille, i, j, TypeParcelle.Terrain);
-                if (Math.random()<0.15)grille[i][j].type=TypeParcelle.Arbre;
+                if (Math.random()<aleaArbres)grille[i][j].type=TypeParcelle.Arbre;
             }
     }
 
