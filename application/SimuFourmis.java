@@ -11,8 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modele.Fourmi;
-import modele.Intru;
+import modele.Drone;
 import modele.Parcelle;
 import modele.Environnement;
 
@@ -57,7 +56,7 @@ import modele.Environnement;
         //definir la scene principale
         troupe = new Group();
         Scene scene = new Scene(troupe, largeur, hauteur, Color.WHITE);
-        primaryStage.setTitle("Simu Fourmis...");
+        primaryStage.setTitle("Simu Drone");
         primaryStage.setScene(scene);
         //definir les acteurs
         evt = new Environnement(this,taille);
@@ -80,9 +79,8 @@ import modele.Environnement;
         //ecoute de evenements souris
         for(int i=0;i<nbdrone;i++)
         {
-            addFourmi();
+            addDrone();
         }
-        /*addIntru();*/
     }
 
     /**
@@ -101,9 +99,6 @@ import modele.Environnement;
             default->System.out.println("touche percue = " + touche);
         }
     }
-
-    /**ajoute une zone de nourriture au point cliqué*/
-
 
     /**
      * creation des parcelles de la grille, et de leurs images
@@ -126,9 +121,9 @@ import modele.Environnement;
     }
 
     /**ajout d'une fourmis et de son image (cercle) au centre de la grille*/
-    public void addFourmi()
+    public void addDrone()
     {
-        Fourmi f = evt.addFourmi((int) (Math.random()*taille), (int) (Math.random()*taille));
+        Drone f = evt.addDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
         Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
         f.setCircle(c);
         troupe.getChildren().add(c);
@@ -169,10 +164,6 @@ import modele.Environnement;
             timeline.getKeyFrames().add(bougeFourmi);
             timeline.play();
         }
-
-    /**demande a chaque image de case de colorer son niveau de pheromone */
-
-
 
     /**methode principale*/
     public static void main(String[] args) {

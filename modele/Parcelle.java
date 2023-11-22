@@ -39,26 +39,7 @@ public class Parcelle {
         this.type = type;
     }
 
-    /**
-     * accumule la phero recue par dillution dans la pheromone
-     * (la phero recue par dillution est ensuite annulee)
-     * puis degrade la pheromone par evaporation
-     * et la met a zero si < au taux d'oubli
-     */
-
-
-
-    /**prise de nourriture par une fourmis
-     * decremente le nb de nourriture
-     * si le nb de nourriture tombe a zero, le type de la parcelle devient un terrain
-     * */
-
-
-
-    /**ajoute une dose de pheromone a la pacelle*/
-
-
-    /**definit le type de la parcelle; si c'est une zone de nourriture, en ajoute 10 */
+    /**definit le type de la parcelle */
     public void setType(TypeParcelle type) {
         this.type = type;
         img.choisirCouleur();

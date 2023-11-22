@@ -17,8 +17,8 @@ public class Environnement {
     int taille;
 
     /**les fourmis presentes*/
-    ArrayList<Fourmi> lesFourmis;
-    ArrayList<Intru> intru;
+    ArrayList<Drone> lesDrones;
+    ArrayList<Intrus> intrus;
 
 
     /**lien vers l'application graphiquue*/
@@ -33,7 +33,7 @@ public class Environnement {
         this.application = application;
         this.taille = taille;
         grille = new Parcelle[taille][taille];
-        lesFourmis = new ArrayList<>();
+        lesDrones = new ArrayList<>();
         init();
     }
 
@@ -64,12 +64,12 @@ public class Environnement {
 
     /**demande au cerle lie a la fourmi de se deplacer dans le point identifie par la parcelle
      * @param f fourmi qui se deplace*/
-    public void bouger(Fourmi f)
+    public void bouger(Drone f)
     {
         application.move(f.circle, f.parcelle.x, f.parcelle.y);
     }
 
-/*    public void bouger(Intru i)
+/*    public void bouger(intrus i)
     {
         application.move(i.circle, i.parcelle.x, i.parcelle.y);
     }*/
@@ -77,24 +77,25 @@ public class Environnement {
      * demande a chaque fourmi d'evoluer
      */
     public void avancer() {
-        lesFourmis.forEach(Fourmi::errer);
+        lesDrones.forEach(Drone::errer);
     }
-
+    /*
     public void avant()
     {
-        intru.forEach(Intru::errer);
+        intrus.forEach(intrus::errer);
     }
-
+    */
     /**demande si possible a la parcelle  de retirer un dose de nourriture
      * */
 
 
     /**cree et ajoute une fourmi initialisee dans la case x,y
      * @return la fourmis creee*/
-    public Fourmi addFourmi(int x, int y)
+    public Drone addDrone(int x, int y)
     {
-        ;Fourmi f = new Fourmi(this, x, y);
-        lesFourmis.add(f);
+        ;
+        Drone f = new Drone(this, x, y);
+        lesDrones.add(f);
         return f;
     }
 
@@ -106,9 +107,9 @@ public class Environnement {
     }
 
 
-    public Intru addIntru(int x, int y) {
-        Intru i = new Intru(this, x, y);
-        intru.add(i);
+    public Intrus addintrus(int x, int y) {
+        Intrus i = new Intrus(this, x, y);
+        intrus.add(i);
         return i;
     }
 }
