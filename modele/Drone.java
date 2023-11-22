@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
  */
 public class Drone {
     // des couleurs
-    static final public Color coulFourmi = Color.color(1,0,0);
+    static final public Color coulDrone = Color.color(1,0,0);
 
     /**coeff de degradation de la dose de pheromone entre chaque depot */
 
@@ -44,7 +44,7 @@ public class Drone {
             d = d.nextDirection();
             parcelle = getParcelleDir(d);
         }
-        evt.bouger(this);
+        evt.bougerDrone(this);
     }
 
 
@@ -58,7 +58,7 @@ public class Drone {
 
     public void setCircle(Circle circle) {
         this.circle = circle;
-        circle.setFill(coulFourmi);
+        circle.setFill(coulDrone);
         circle.setRadius(4);
     }
 }

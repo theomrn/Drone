@@ -12,6 +12,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.Drone;
+import modele.Intrus;
 import modele.Parcelle;
 import modele.Environnement;
 
@@ -81,6 +82,7 @@ import modele.Environnement;
         {
             addDrone();
         }
+        addIntrus();
     }
 
     /**
@@ -128,13 +130,14 @@ import modele.Environnement;
         f.setCircle(c);
         troupe.getChildren().add(c);
     }
-     /*   public void addIntru()
-        {
-            Intru f = evt.addIntru(taille/2,taille/2);
-            Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
-            f.setCircle(c);
-            troupe.getChildren().add(c);
-        }*/
+
+    public void addIntrus()
+    {
+        Intrus f = evt.addIntrus(taille/2,taille/2);
+        Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
+        f.setCircle(c);
+        troupe.getChildren().add(c);
+    }
 
 
     /**
@@ -153,17 +156,37 @@ import modele.Environnement;
         timeline.play();
     }
 
-        public void moveUp(Circle c, int xx, int yy)
-        {
-            Timeline timeline = new Timeline();
-            int xdest = (xx*largeur) / taille + 3*espace/2;
-            int ydest = (yy*largeur) / taille + 3*espace/2;
-            KeyFrame bougeFourmi = new KeyFrame(new Duration(tempo),
-                    new KeyValue(c.centerXProperty(), xdest),
-                    new KeyValue(c.centerYProperty(), ydest));
-            timeline.getKeyFrames().add(bougeFourmi);
-            timeline.play();
-        }
+    /*
+    public void moveUp(Circle c, int xx, int yy) {
+        Timeline timeline = new Timeline();
+        int xdest = (xx * largeur) / taille + 3 * espace / 2;
+        int ydest = (yy * largeur) / taille + 3 * espace / 2;
+        KeyFrame bougeFourmi = new KeyFrame(new Duration(tempo),
+                new KeyValue(c.centerXProperty(), xdest),
+                new KeyValue(c.centerYProperty(), ydest));
+        timeline.getKeyFrames().add(bougeFourmi);
+        timeline.play();
+    }
+
+    void construireScenePourDrones(Stage primaryStage){
+        Intrus intrus = terrain.getIntrus();
+        Circle dessinIntrus = intrus.getDessin();
+        dessinIntrus.requestFocus();
+        dessinIntrus.setOnKeyPressed(e->{
+            System.err.println(e.getCode());
+            switch(e.getCode()) {
+                case UP -> intrus.setDirection(Direction.NORD);
+                intrus.bougerVersDirection();
+                case LEFT -> intrus.setDirection(Direction.OUEST);
+                intrus.bougerVersDirection();
+                case DOWN -> intrus.setDirection(Direction.SUD);
+                intrus.bougerVersDirection();
+                case RIGHT -> intrus.setDirection(Direction.EST);
+                intrus.bougerVersDirection();
+            }
+        });
+    }
+    */
 
     /**methode principale*/
     public static void main(String[] args) {
