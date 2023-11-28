@@ -34,7 +34,7 @@ public class SimuDrone extends Application {
     /** délai en ms entre chaque etape de simulation*/
     int nbdrone=10;
 
-    public static final int tempo = 100;
+    public static int tempo = 100;
     /** troupe des elements graphiques*/
     Group troupe;
 
@@ -84,19 +84,35 @@ public class SimuDrone extends Application {
             switch(e.getCode()) {
                 case UP ->{
                     intrus.setDirection(Direction.N);
-                    intrus.bougerVersDirection();
+                    try {
+                        intrus.bougerVersDirection();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
                 case LEFT -> {
                     intrus.setDirection(Direction.O);
-                    intrus.bougerVersDirection();
+                    try {
+                        intrus.bougerVersDirection();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
                 case DOWN -> {
                     intrus.setDirection(Direction.S);
-                    intrus.bougerVersDirection();
+                    try {
+                        intrus.bougerVersDirection();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
                 case RIGHT -> {
                     intrus.setDirection(Direction.E);
-                    intrus.bougerVersDirection();
+                    try {
+                        intrus.bougerVersDirection();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });

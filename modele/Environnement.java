@@ -39,6 +39,7 @@ public class Environnement {
         intrus = new ArrayList<>();
         init();
         addSortie();
+        ajouterTresor();
     }
 
 
@@ -124,5 +125,9 @@ public class Environnement {
     void ajouterTresor() {
         int i = (int)(Math.random()*taille);
         int y = (int)(Math.random()*taille);
+
+        grille[i][y] = new Parcelle(grille, i, y, TypeParcelle.Sortie);
+        grille[i][y].type = TypeParcelle.Sortie;
+
     }
 }

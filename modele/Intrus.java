@@ -1,5 +1,8 @@
 package modele;
 
+import application.SimuDrone;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -25,17 +28,6 @@ public class Intrus {
         return evt.grille[x][y];
     }
 
-    void errer()
-    {
-        d = d.nextDirection();
-        parcelle = getParcelleDir(d);
-        while (parcelle.getType()==TypeParcelle.Arbre){
-            d = d.nextDirection();
-            parcelle = getParcelleDir(d);
-        }
-        evt.bougerIntrus(this);
-    }
-
 
     public void setCircle(Circle circle) {
         this.circle = circle;
@@ -47,17 +39,83 @@ public class Intrus {
         this.d = d;
     }
 
-    public void bougerVersDirection(){
+    public void bougerVersDirection() throws InterruptedException {
         Parcelle prochaineParcelle = getParcelleDir(d);
-        // Vérifiez si la prochaine parcelle est accessible (pas un arbre)
+
         if (prochaineParcelle.getType() != TypeParcelle.Arbre) {
-            // Déplacez l'intrus vers la nouvelle parcelle
             parcelle = prochaineParcelle;
             evt.bougerIntrus(this);
+            // Détecter les drones proches
+            detecterDronesProches();
+        }
+
+        if (prochaineParcelle.getType() == TypeParcelle.Sortie) {
+            evt.bougerIntrus(this);
+            SimuDrone.tempo = 0;
+            gagne();
+            fermerApplication();
         }
     }
 
     public Circle getDessin() {
         return this.circle;
     }
+
+    private void gagne() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("VOUS AVEZ GAGNE !!");
+        alert.showAndWait();
+    }
+
+    private void perdu() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("VOUS AVEZ Perdu ...");
+        alert.showAndWait();
+    }
+
+    private void fermerApplication() {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    private void detecterDronesProches() {
+        int distanceDetection = 3;
+        int dureeDetection = 3000;
+
+        for (Drone drone : evt.lesDrones) {
+            int distanceX = Math.abs(parcelle.x - drone.parcelle.x);
+            int distanceY = Math.abs(parcelle.y - drone.parcelle.y);
+
+            int distance = Math.max(distanceX, distanceY);
+
+            if (distance < distanceDetection) {
+
+                new Thread(() -> {
+                    long debutDetection = System.currentTimeMillis();
+
+                    while (System.currentTimeMillis() - debutDetection < dureeDetection) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (distance(parcelle, drone.parcelle) < distanceDetection) {
+                        Platform.runLater(() -> {
+                            System.out.println("Perdu ! Resté à proximité du drone pendant trop longtemps !");
+                            perdu();
+                            fermerApplication();
+                        });
+                    }
+                }).start();
+            }
+        }
+    }
+
+    private int distance(Parcelle p1, Parcelle p2) {
+        int distanceX = Math.abs(p1.x - p2.x);
+        int distanceY = Math.abs(p1.y - p2.y);
+        return Math.max(distanceX, distanceY);
+    }
+
 }

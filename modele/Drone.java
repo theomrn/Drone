@@ -34,20 +34,12 @@ public class Drone {
 
     void errer()
     {
-        Direction nouvelleDirection = d.nextDirection();
-        Parcelle prochaineParcelle = getParcelleDir(nouvelleDirection);
-        int i=0;
-        while ((prochaineParcelle.getType() == TypeParcelle.Arbre)&&(i<2)) {
-            nouvelleDirection = d.nextDirection();
-            prochaineParcelle = getParcelleDir(nouvelleDirection);
-            i++;
+        d = d.nextDirection();
+        parcelle = getParcelleDir(d);
+        while (parcelle.getType() == TypeParcelle.Arbre) {
+            d = d.nextDirection();
+            parcelle = getParcelleDir(d);
         }
-        if (i>1)
-        {
-            nouvelleDirection=d.inverse();
-            prochaineParcelle= getParcelleDir(nouvelleDirection);
-        }
-        parcelle = prochaineParcelle;
         evt.bougerDrone(this);
     }
 

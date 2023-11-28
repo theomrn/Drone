@@ -17,6 +17,7 @@ public class ImgParcelle  {
     static final public Color coulFond = Color.color(0.349, 0.325, 0.349);
     static final public Color coulArbre = Color.color(0,1,0);
     static final public Color coulSortie = Color.color(0.047, 0.302, 0.471);
+    static final public Color coulTresor = Color.color(0.500,0.500,0.012);
 
 
 
@@ -50,8 +51,8 @@ public class ImgParcelle  {
             case Terrain -> elt.setFill(coulFond);
             case Arbre -> elt.setFill(coulArbre);
             case Sortie -> elt.setFill(coulSortie);
+            case Tresor -> elt.setFill(coulTresor);
         }
-//        elt.setOpacity(parcelle.getOdeurNid());
     }
 
     public Parcelle getParcelle() { return parcelle; }
