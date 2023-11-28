@@ -15,7 +15,7 @@ public class Intrus {
         this.evt = evt;
         this.parcelle = evt.getGrille()[x][y];
         this.d = Direction.getRandom();
-        this.vitesse = 1.0;
+        this.vitesse = 2.0;
     }
 
     private Parcelle getParcelleDir(Direction dir)

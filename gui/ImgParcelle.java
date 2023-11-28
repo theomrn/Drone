@@ -16,16 +16,14 @@ public class ImgParcelle  {
     // des couleurs
     static final public Color coulFond = Color.color(0.349, 0.325, 0.349);
     static final public Color coulArbre = Color.color(0,1,0);
+    static final public Color coulSortie = Color.color(0.047, 0.302, 0.471);
 
-    static final public Color coulIntru = Color.color(0,0,1);
 
 
     /**parcelle liee a cette image*/
     private Parcelle parcelle;
     /**carre liee au type*/
     private Rectangle elt;
-    /**carre contenant la dose de pheromone au type*/
-    private Rectangle phero;
 
     /**
      * creation d'une image de parcelle
@@ -51,6 +49,7 @@ public class ImgParcelle  {
         {
             case Terrain -> elt.setFill(coulFond);
             case Arbre -> elt.setFill(coulArbre);
+            case Sortie -> elt.setFill(coulSortie);
         }
 //        elt.setOpacity(parcelle.getOdeurNid());
     }

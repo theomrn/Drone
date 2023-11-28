@@ -66,10 +66,7 @@ public class SimuDrone extends Application {
         primaryStage.show();
         //-----lancer le timer pour faire vivre la simulation
         Timeline littleCycle = new Timeline(new KeyFrame(Duration.millis(tempo),
-                event -> {
-                    evt.avancer();
-
-                }));
+                event -> evt.avancer()));
         littleCycle.setCycleCount(Timeline.INDEFINITE);
         littleCycle.play();
         //ecoute de evenements claviers
@@ -175,38 +172,6 @@ public class SimuDrone extends Application {
         timeline.getKeyFrames().add(bougeFourmi);
         timeline.play();
     }
-
-    /*
-    public void moveUp(Circle c, int xx, int yy) {
-        Timeline timeline = new Timeline();
-        int xdest = (xx * largeur) / taille + 3 * espace / 2;
-        int ydest = (yy * largeur) / taille + 3 * espace / 2;
-        KeyFrame bougeFourmi = new KeyFrame(new Duration(tempo),
-                new KeyValue(c.centerXProperty(), xdest),
-                new KeyValue(c.centerYProperty(), ydest));
-        timeline.getKeyFrames().add(bougeFourmi);
-        timeline.play();
-    }
-
-    void construireScenePourDrones(Stage primaryStage){
-        Intrus intrus = terrain.getIntrus();
-        Circle dessinIntrus = intrus.getDessin();
-        dessinIntrus.requestFocus();
-        dessinIntrus.setOnKeyPressed(e->{
-            System.err.println(e.getCode());
-            switch(e.getCode()) {
-                case UP -> intrus.setDirection(Direction.NORD);
-                intrus.bougerVersDirection();
-                case LEFT -> intrus.setDirection(Direction.OUEST);
-                intrus.bougerVersDirection();
-                case DOWN -> intrus.setDirection(Direction.SUD);
-                intrus.bougerVersDirection();
-                case RIGHT -> intrus.setDirection(Direction.EST);
-                intrus.bougerVersDirection();
-            }
-        });
-    }
-    */
 
     /**methode principale*/
     public static void main(String[] args) {

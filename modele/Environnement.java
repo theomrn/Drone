@@ -99,4 +99,12 @@ public class Environnement {
         return grille;
     }
 
+    /**
+     * ajouter une sortie a la grille , les sortie sont au milieu des cotés de l'environnement
+     * si l'intrus est present pendant 4 seconde le jeu se termine et affiche "vous avez gagné"
+     */
+    void addSortie(){
+
+    }
+
 }
