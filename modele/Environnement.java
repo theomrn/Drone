@@ -1,8 +1,6 @@
 package modele;
 
 import application.SimuDrone;
-import javafx.scene.shape.Circle;
-
 import java.util.ArrayList;
 
 
@@ -18,6 +16,7 @@ public class Environnement {
     int taille;
     /* % d'arbres */
     double aleaArbres = 0.15;
+    int nb_sortie = 2;
 
     /**les fourmis presentes*/
     ArrayList<Drone> lesDrones;
@@ -39,6 +38,7 @@ public class Environnement {
         lesDrones = new ArrayList<>();
         intrus = new ArrayList<>();
         init();
+        addSortie();
     }
 
 
@@ -88,9 +88,6 @@ public class Environnement {
         return intrus.get(0);
     }
 
-    public Circle getDessin(){
-        return intrus.get(0).getDessin();
-    }
 
     /**
      * @return la grille des parcelles
@@ -101,10 +98,31 @@ public class Environnement {
 
     /**
      * ajouter une sortie a la grille , les sortie sont au milieu des cotés de l'environnement
-     * si l'intrus est present pendant 4 seconde le jeu se termine et affiche "vous avez gagné"
      */
     void addSortie(){
+        // Déclaration et initialisation du tableau de coordonnées
+        int[][] coordonnees = new int[4][2];
+        int t = taille/2;
+
+        // Ajout de coordonnées au tableau
+        coordonnees[0][0] = 0;
+        coordonnees[0][1] = t;
+
+        coordonnees[1][0] = t;
+        coordonnees[1][1] = 0;
+
+        for (int i = 0;i<nb_sortie;i++){
+            grille[coordonnees[i][0]][coordonnees[i][1]] = new Parcelle(grille, 0, t, TypeParcelle.Sortie);
+            grille[coordonnees[i][0]][coordonnees[i][1]].type = TypeParcelle.Sortie;
+        }
 
     }
 
+    /**
+     * fonction pour ajouter un tresor a trouver avant de pouvoir utiliser la sortie
+     */
+    void ajouterTresor() {
+        int i = (int)(Math.random()*taille);
+        int y = (int)(Math.random()*taille);
+    }
 }
