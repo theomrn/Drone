@@ -33,6 +33,7 @@ public class SimuDrone extends Application {
     int hauteur = 600;
     /** délai en ms entre chaque etape de simulation*/
     int nbdrone=10;
+    int nbdrone2=5;
 
     public static int tempo = 100;
     /** troupe des elements graphiques*/
@@ -74,6 +75,9 @@ public class SimuDrone extends Application {
         for(int i=0;i<nbdrone;i++)
         {
             addDrone();
+        }
+        for (int j = 0; j < nbdrone2; j++) {
+            addpetitDrone();
         }
         addIntrus();
         Intrus intrus = evt.getIntrus();
@@ -189,8 +193,17 @@ public class SimuDrone extends Application {
         timeline.play();
     }
 
+    public void addpetitDrone()
+    {
+        petitDrone f = evt.addPetitDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
+        Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
+        f.setCircle(c);
+        troupe.getChildren().add(c);
+    }
+
     /**methode principale*/
     public static void main(String[] args) {
         launch(args);
     }
+
 }

@@ -18,6 +18,7 @@ public class ImgParcelle  {
     static final public Color coulArbre = Color.color(0,1,0);
     static final public Color coulSortie = Color.color(0.047, 0.302, 0.471);
     static final public Color coulTresor = Color.color(0.500,0.500,0.012);
+    static final public Color coulArbre2 = Color.color(0.1,0.6,0.1);
 
 
 
@@ -52,8 +53,45 @@ public class ImgParcelle  {
             case Arbre -> elt.setFill(coulArbre);
             case Sortie -> elt.setFill(coulSortie);
             case Tresor -> elt.setFill(coulTresor);
+            case Arbre2 -> elt.setFill(coulArbre2);
         }
     }
 
     public Parcelle getParcelle() { return parcelle; }
+
+    /*
+    public ImgParcelle() {
+        couleur = Color.BLACK; // Initialiser la couleur à noir
+    }
+
+    public void setCouleur(Color couleur) {
+        this.couleur = couleur;
+    }
+
+    public Color getCouleur() {
+        return couleur;
+    }
+    public static void mettreAJourCouleur(Rectangle elt, boolean illumine) {
+        if (illumine) {
+            elt.setFill(Color.WHITE); // Si la parcelle est éclairée, définir la couleur sur blanc
+        } else {
+            elt.setFill(Color.BLACK); // Si la parcelle n'est pas éclairée, définir la couleur sur noir
+        }
+    }
+    public void mettreAJourEclairage(Intrus intrus) {
+        int intrusX = intrus.getParcelle().getX();
+        int intrusY = intrus.getParcelle().getY();
+
+        int parcelleX = parcelle.getX();
+        int parcelleY = parcelle.getY();
+
+        double distance = Math.sqrt(Math.pow(intrusX - parcelleX, 2) + Math.pow(intrusY - parcelleY, 2));
+
+        if (distance <= 3 && !Parcelle.illumine()) {
+            mettreAJourCouleur(elt,true); // Mettre à jour la couleur en tant qu'éclairée
+        } else {
+            mettreAJourCouleur(elt,false); // Mettre à jour la couleur en tant que non éclairée
+        }
+    }
+     */
 }

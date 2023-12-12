@@ -1,17 +1,10 @@
 package modele;
 
-import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-/**
- * cette classe represente une fourmis
- *
- * @author Emmanuel Adam
- */
-public class Drone {
-    // des couleurs
-    static final public Color coulDrone = Color.color(1,0,0);
+public class petitDrone {
+    static final public Color coulDrone = Color.color(1,0.5,0.6);
 
     /**coeff de degradation de la dose de pheromone entre chaque depot */
 
@@ -30,10 +23,10 @@ public class Drone {
     int x ;
     int y;
 
-    public Drone(Environnement  evt, int x, int y) {
+    public petitDrone(Environnement evt,int x, int y) {
         this.evt = evt;
-        this.parcelle = evt.getGrille()[x][y];
-        this.d = Direction.getRandom();
+        this.x = x;
+        this.y = y;
     }
 
     void errer()
@@ -41,8 +34,8 @@ public class Drone {
         if (!intrusTrouvé) {
             d = d.nextDirection();
             Parcelle prochaineParcelle = getParcelleDir(d);
-            if (prochaineParcelle.getType() != TypeParcelle.Arbre){
-                evt.bougerDrone(this);
+            if (prochaineParcelle.getType() != TypeParcelle.Arbre && prochaineParcelle.getType() != TypeParcelle.Arbre2){
+                evt.bougerPetitDrone(this);
                 parcelle = getParcelleDir(d);
             }
 
@@ -52,17 +45,17 @@ public class Drone {
             //cheminVersIntrus();
         }
     }
-/*
-    void cheminVersIntrus() {
-        d = d.nextDirection();
-        parcelle = getParcelleDir(d);
-        //if (!(distance(getParcelleDir(d, intrus) < distance(getParcelleDir(d, drone)))) {
+    /*
+        void cheminVersIntrus() {
             d = d.nextDirection();
             parcelle = getParcelleDir(d);
+            //if (!(distance(getParcelleDir(d, intrus) < distance(getParcelleDir(d, drone)))) {
+                d = d.nextDirection();
+                parcelle = getParcelleDir(d);
+            }
+            evt.bougerDrone(this);
         }
-        evt.bougerDrone(this);
-    }
-*/
+    */
     private Parcelle getParcelleDir(Direction dir)
     {
         int x = Math.max(0, Math.min(evt.taille - 1, parcelle.x + dir.x));

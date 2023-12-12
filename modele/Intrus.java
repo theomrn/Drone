@@ -13,6 +13,7 @@ public class Intrus {
     Parcelle parcelle;
     static final public Color coulIntrus = Color.color(0,0,1);
     private double vitesse;
+    boolean tresorTrouve = false;
 
     public Intrus(Environnement evt, int x, int y) {
         this.evt = evt;
@@ -43,13 +44,18 @@ public class Intrus {
         Parcelle prochaineParcelle = getParcelleDir(d);
 
         if (prochaineParcelle.getType() != TypeParcelle.Arbre) {
+            if (prochaineParcelle.getType() == TypeParcelle.Tresor) {
+                tresorTrouve = true;
+                System.out.println("Tresor trouve");
+                System.out.println(tresorTrouve);
+            }
             parcelle = prochaineParcelle;
             evt.bougerIntrus(this);
             // Détecter les drones proches
             detecterDronesProches();
         }
 
-        if (prochaineParcelle.getType() == TypeParcelle.Sortie) {
+        if (prochaineParcelle.getType() == TypeParcelle.Sortie && tresorTrouve) {
             evt.bougerIntrus(this);
             SimuDrone.tempo = 0;
             gagne();

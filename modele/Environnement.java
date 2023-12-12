@@ -16,11 +16,13 @@ public class Environnement {
     int taille;
     /* % d'arbres */
     double aleaArbres = 0.15;
+    double aleaArbres2 = 0.10;
     int nb_sortie = 2;
-
-    /**les fourmis presentes*/
+    // boolean illumine;
+    // Color couleur;
     ArrayList<Drone> lesDrones;
     ArrayList<Intrus> intrus;
+    ArrayList<petitDrone> lesPetitDrones;
 
 
     /**lien vers l'application graphiquue*/
@@ -51,20 +53,18 @@ public class Environnement {
             for (int j = 0; j < taille; j++) {
                 grille[i][j] = new Parcelle(grille, i, j, TypeParcelle.Terrain);
                 if (Math.random()<aleaArbres)grille[i][j].type=TypeParcelle.Arbre;
+                if (Math.random()<aleaArbres2)grille[i][j].type=TypeParcelle.Arbre2;
             }
     }
 
-    /**demande au cerle lie a la fourmi de se deplacer dans le point identifie par la parcelle
-     * @param f fourmi qui se deplace*/
     public void bougerDrone(Drone f)
     {
         application.move(f.circle, f.parcelle.x, f.parcelle.y);
     }
 
-    public void bougerIntrus(Intrus i)
-    {
-        application.move(i.circle, i.parcelle.x, i.parcelle.y);
-    }
+    public void bougerPetitDrone(petitDrone f){application.move(f.circle, f.parcelle.x, f.parcelle.y);}
+    public void bougerIntrus(Intrus i) {
+        application.move(i.circle, i.parcelle.x, i.parcelle.y);}
 
     public void avancer() {
         lesDrones.forEach(Drone::errer);
@@ -76,6 +76,13 @@ public class Environnement {
     {
         Drone f = new Drone(this, x, y);
         lesDrones.add(f);
+        return f;
+    }
+
+    public petitDrone addPetitDrone(int x, int y)
+    {
+        petitDrone f = new petitDrone(this, x, y);
+        lesPetitDrones.add(f);
         return f;
     }
 
@@ -123,11 +130,30 @@ public class Environnement {
      * fonction pour ajouter un tresor a trouver avant de pouvoir utiliser la sortie
      */
     void ajouterTresor() {
-        int i = (int)(Math.random()*taille);
+        int x = (int)(Math.random()*taille);
         int y = (int)(Math.random()*taille);
 
-        grille[i][y] = new Parcelle(grille, i, y, TypeParcelle.Sortie);
-        grille[i][y].type = TypeParcelle.Sortie;
+        grille[x][y] = new Parcelle(grille, x, y, TypeParcelle.Tresor);
+        grille[x][y].type = TypeParcelle.Tresor;
 
     }
+
+    /*
+    public void mettreAJourEclairage(Intrus intrus) {
+        int intrusX = intrus.parcelle.x;
+        int intrusY = intrus.parcelle.y;
+
+        if (Math.abs(intrusX - x) <= 2 && Math.abs(intrusY - y) <= 2) {
+            illumine = true;
+            ImgParcelle.mettreAJourCouleur(, illumine); // Mettre à jour la couleur de l'élément graphique
+        } else {
+            illumine = false;
+            couleur = Color.BLACK; // Si la parcelle n'est pas éclairée, définir la couleur sur noir
+            ImgParcelle.mettreAJourCouleur(,illumine); // Mettre à jour la couleur de l'élément graphique
+        }
+    }
+    public Color getCouleur() {
+        return couleur;
+    }
+     */
 }

@@ -11,7 +11,7 @@ import java.util.Random;
  * (ex. un deplacement N implique un d�placement de 0 en x, -1 en y
  * un deplacement SE implique un d�placement de 1 en x, 1 en y)
  */
-public enum Direction {N(0,-1), NE(1,-1), E(1,0), SE(1,1), S(0,1), SO(-1,1), O(-1,0), NO(-1,-1);
+public enum Direction {N(0,-1), E(1,0), S(0,1), O(-1,0);
     int x;
     int y;
     /**objet utilise pour choix aleatoire*/
@@ -26,7 +26,7 @@ public enum Direction {N(0,-1), NE(1,-1), E(1,0), SE(1,1), S(0,1), SO(-1,1), O(-
     {
         int h = r.nextInt(3)-1;
         int no = this.ordinal();
-        no = (no +h+ 8)%8;
+        no = (no +h+ 4)%4;
         return Direction.values()[no];
     }
 
