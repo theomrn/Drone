@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.*;
 
+import static modele.petitDrone.parcelle;
+
 public class SimuDrone extends Application {
     /**
      * environnement liee a cet objet graphique
@@ -88,7 +90,7 @@ public class SimuDrone extends Application {
         dessinIntrus.setOnKeyPressed(e->{
             System.err.println(e.getCode());
             switch(e.getCode()) {
-                case UP ->{
+                case Z ->{
                     intrus.setDirection(Direction.N);
                     try {
                         intrus.bougerVersDirection();
@@ -96,7 +98,7 @@ public class SimuDrone extends Application {
                         throw new RuntimeException(ex);
                     }
                 }
-                case LEFT -> {
+                case Q -> {
                     intrus.setDirection(Direction.O);
                     try {
                         intrus.bougerVersDirection();
@@ -104,7 +106,7 @@ public class SimuDrone extends Application {
                         throw new RuntimeException(ex);
                     }
                 }
-                case DOWN -> {
+                case S -> {
                     intrus.setDirection(Direction.S);
                     try {
                         intrus.bougerVersDirection();
@@ -112,7 +114,7 @@ public class SimuDrone extends Application {
                         throw new RuntimeException(ex);
                     }
                 }
-                case RIGHT -> {
+                case D -> {
                     intrus.setDirection(Direction.E);
                     try {
                         intrus.bougerVersDirection();
@@ -122,22 +124,8 @@ public class SimuDrone extends Application {
                 }
             }
         });
-        overlay = new Rectangle(largeur, hauteur, Color.BLACK);
-        troupe.getChildren().add(overlay);
-        overlay.toFront();  // Placer l'overlay au-dessus de la carte principale
-
-        // Révéler initialement la carte inférieure
-        revealInitialMap();
     }
 
-    private void revealInitialMap() {
-        for (int i = 0; i < taille; i++) {
-            for (int j = 0; j < taille; j++) {
-                // Ajuster l'opacité de l'overlay pour révéler la carte inférieure initialement
-                cases[i][j].getImg().ajusterOpaciteOverlay(0);
-            }
-        }
-    }
 
     void agirSelonTouche(String touche, Timeline chrono)
     {

@@ -19,8 +19,7 @@ public class ImgParcelle  {
     static final public Color coulSortie = Color.color(0.047, 0.302, 0.471);
     static final public Color coulTresor = Color.color(1,1,0.012);
     static final public Color coulArbre2 = Color.color(0.1,0.6,0.1);
-
-
+    public ImgParcelle img;
 
 
     /**parcelle liee a cette image*/
@@ -53,7 +52,7 @@ public class ImgParcelle  {
         overlay = new Rectangle(x, y, dim, dim);
         overlay.setFill(Color.BLACK);
         troupe.getChildren().add(overlay);
-        overlay.toFront();  // Placer l'overlay au-dessus de la parcelle
+        /*overlay.toFront();*/  // Placer l'overlay au-dessus de la parcelle
     }
 
     public Rectangle getOverlay() {

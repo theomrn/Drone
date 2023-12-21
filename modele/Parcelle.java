@@ -14,9 +14,9 @@ public class Parcelle {
     /**type de la parcelle*/
     TypeParcelle type;
     /**coordonnee x de la parcelle dans la grille*/
-    final int x;
+    public final int x;
     /**coordonnee y de la parcelle dans la grille*/
-    final int y;
+    public final int y;
 
     /**dose de nourriture*/
     /** reference a la grille des parcelles*/

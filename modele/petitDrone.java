@@ -9,7 +9,7 @@ public class petitDrone {
     /**coeff de degradation de la dose de pheromone entre chaque depot */
 
     /**parcelle ou se trouve la fourmi*/
-    static Parcelle parcelle;
+    public static Parcelle parcelle;
 
     /**direction actuelle de la fourmis*/
     Direction d;
