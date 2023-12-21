@@ -60,6 +60,4 @@ public class Parcelle {
                 ", y=" + y +
                 '}';
     }
-
-
 }

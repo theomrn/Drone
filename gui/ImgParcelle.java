@@ -17,8 +17,9 @@ public class ImgParcelle  {
     static final public Color coulFond = Color.color(0.349, 0.325, 0.349);
     static final public Color coulArbre = Color.color(0,1,0);
     static final public Color coulSortie = Color.color(0.047, 0.302, 0.471);
-    static final public Color coulTresor = Color.color(0.500,0.500,0.012);
+    static final public Color coulTresor = Color.color(1,1,0.012);
     static final public Color coulArbre2 = Color.color(0.1,0.6,0.1);
+
 
 
 
@@ -26,6 +27,12 @@ public class ImgParcelle  {
     private Parcelle parcelle;
     /**carre liee au type*/
     private Rectangle elt;
+    private Rectangle overlay;
+
+    /** ajuste l'opacité de l'overlay */
+    public void ajusterOpaciteOverlay(double nouvelleOpacite) {
+        overlay.setOpacity(nouvelleOpacite);
+    }
 
     /**
      * creation d'une image de parcelle
@@ -42,7 +49,21 @@ public class ImgParcelle  {
         this.parcelle = parcelle;
         elt = new Rectangle(x,y,dim, dim);
         troupe.getChildren().add(elt);
+        // Ajouter l'overlay noir
+        overlay = new Rectangle(x, y, dim, dim);
+        overlay.setFill(Color.BLACK);
+        troupe.getChildren().add(overlay);
+        overlay.toFront();  // Placer l'overlay au-dessus de la parcelle
     }
+
+    public Rectangle getOverlay() {
+        return overlay;
+    }
+
+    public ImgParcelle getImg() {
+        return this; // Ou remplacez-le par le champ approprié qui contient l'image
+    }
+    // Méthode pour ajuster l'opacité de l'overla
 
     /**choisit la couleur de l'elt selon la nature de la parcelle */
     public void choisirCouleur()
@@ -58,40 +79,4 @@ public class ImgParcelle  {
     }
 
     public Parcelle getParcelle() { return parcelle; }
-
-    /*
-    public ImgParcelle() {
-        couleur = Color.BLACK; // Initialiser la couleur à noir
-    }
-
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
-    }
-
-    public Color getCouleur() {
-        return couleur;
-    }
-    public static void mettreAJourCouleur(Rectangle elt, boolean illumine) {
-        if (illumine) {
-            elt.setFill(Color.WHITE); // Si la parcelle est éclairée, définir la couleur sur blanc
-        } else {
-            elt.setFill(Color.BLACK); // Si la parcelle n'est pas éclairée, définir la couleur sur noir
-        }
-    }
-    public void mettreAJourEclairage(Intrus intrus) {
-        int intrusX = intrus.getParcelle().getX();
-        int intrusY = intrus.getParcelle().getY();
-
-        int parcelleX = parcelle.getX();
-        int parcelleY = parcelle.getY();
-
-        double distance = Math.sqrt(Math.pow(intrusX - parcelleX, 2) + Math.pow(intrusY - parcelleY, 2));
-
-        if (distance <= 3 && !Parcelle.illumine()) {
-            mettreAJourCouleur(elt,true); // Mettre à jour la couleur en tant qu'éclairée
-        } else {
-            mettreAJourCouleur(elt,false); // Mettre à jour la couleur en tant que non éclairée
-        }
-    }
-     */
 }

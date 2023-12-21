@@ -15,23 +15,18 @@ public class Environnement {
     /** taille de la grille */
     int taille;
     /* % d'arbres */
-    double aleaArbres = 0.15;
+    double aleaArbres = 0.05;
     double aleaArbres2 = 0.10;
-    int nb_sortie = 2;
-    // boolean illumine;
-    // Color couleur;
+
     ArrayList<Drone> lesDrones;
     ArrayList<Intrus> intrus;
     ArrayList<petitDrone> lesPetitDrones;
 
-
     /**lien vers l'application graphiquue*/
     SimuDrone application;
 
-
     /**
-     * constructeur initialisant l'application et la taille,
-     * la grille et la liste des fourmis
+     * constructeur initialisant l'application et la taille, et initialisant la grille
      */
     public Environnement(SimuDrone application, int taille) {
         this.application = application;
@@ -39,11 +34,11 @@ public class Environnement {
         grille = new Parcelle[taille][taille];
         lesDrones = new ArrayList<>();
         intrus = new ArrayList<>();
+        lesPetitDrones = new ArrayList<>();
         init();
-        addSortie();
+        sortie();
         ajouterTresor();
     }
-
 
     /**
      * remplit la grille de parcelles de type terrain
@@ -62,16 +57,22 @@ public class Environnement {
         application.move(f.circle, f.parcelle.x, f.parcelle.y);
     }
 
-    public void bougerPetitDrone(petitDrone f){application.move(f.circle, f.parcelle.x, f.parcelle.y);}
-    public void bougerIntrus(Intrus i) {
-        application.move(i.circle, i.parcelle.x, i.parcelle.y);}
+    public void bougerIntrus(Intrus i)
+    {
+        application.move(i.circle, i.parcelle.x, i.parcelle.y);
+    }
+
+    public void bougerPetitDrone(petitDrone i)
+    {
+        application.move(i.circle, i.parcelle.x, i.parcelle.y);
+    }
 
     public void avancer() {
         lesDrones.forEach(Drone::errer);
+        lesPetitDrones.forEach(petitDrone::errer);
     }
 
-    /**cree et ajoute un drone initialisee dans la case x,y
-     * @return la fourmis creee*/
+    /**cree et ajoute un drone initialisee dans la case x,y */
     public Drone addDrone(int x, int y)
     {
         Drone f = new Drone(this, x, y);
@@ -79,16 +80,16 @@ public class Environnement {
         return f;
     }
 
+    public Intrus addIntrus(int x,int y){
+        Intrus f = new Intrus(this, x, y);
+        intrus.add(f);
+        return f;
+    }
+
     public petitDrone addPetitDrone(int x, int y)
     {
         petitDrone f = new petitDrone(this, x, y);
         lesPetitDrones.add(f);
-        return f;
-    }
-
-    public Intrus addIntrus(int x,int y){
-        Intrus f = new Intrus(this, x, y);
-        intrus.add(f);
         return f;
     }
 
@@ -107,53 +108,71 @@ public class Environnement {
     /**
      * ajouter une sortie a la grille , les sortie sont au milieu des cotés de l'environnement
      */
-    void addSortie(){
-        // Déclaration et initialisation du tableau de coordonnées
-        int[][] coordonnees = new int[4][2];
-        int t = taille/2;
-
-        // Ajout de coordonnées au tableau
-        coordonnees[0][0] = 0;
-        coordonnees[0][1] = t;
-
-        coordonnees[1][0] = t;
-        coordonnees[1][1] = 0;
-
-        for (int i = 0;i<nb_sortie;i++){
-            grille[coordonnees[i][0]][coordonnees[i][1]] = new Parcelle(grille, 0, t, TypeParcelle.Sortie);
-            grille[coordonnees[i][0]][coordonnees[i][1]].type = TypeParcelle.Sortie;
+    void sortie(){
+        int t=taille/2;
+        grille[0][t] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[0][t].type=TypeParcelle.Sortie;
+        grille[1][t] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[1][t].type=TypeParcelle.Sortie;
+        grille[99][t] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[99][t].type=TypeParcelle.Sortie;
+        grille[98][t] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[98][t].type=TypeParcelle.Sortie;
+        grille[t][0] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[t][0].type=TypeParcelle.Sortie;
+        grille[t][1] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[t][1].type=TypeParcelle.Sortie;
+        grille[t][99] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[t][99].type=TypeParcelle.Sortie;
+        grille[t][98] = new Parcelle(grille, 0, t, TypeParcelle.Terrain);
+        grille[t][98].type=TypeParcelle.Sortie;
+        for(int i =1;i<6; i++){
+            grille[0][t-i] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[0][t-i].type=TypeParcelle.Sortie;
+            grille[1][t-i] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[1][t-i].type=TypeParcelle.Sortie;
+            grille[99][t-i] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[99][t-i].type=TypeParcelle.Sortie;
+            grille[98][t-i] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[98][t-i].type=TypeParcelle.Sortie;
+            grille[t-i][0] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[t-i][0].type=TypeParcelle.Sortie;
+            grille[t-i][1] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[t-i][1].type=TypeParcelle.Sortie;
+            grille[t-i][99] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[t-i][99].type=TypeParcelle.Sortie;
+            grille[t-i][98] = new Parcelle(grille, 0, i-t, TypeParcelle.Terrain);
+            grille[t-i][98].type=TypeParcelle.Sortie;
         }
-
+        for(int i =1;i<6; i++){
+            grille[0][t+i] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[0][t+i].type=TypeParcelle.Sortie;
+            grille[1][t+i] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[1][t+i].type=TypeParcelle.Sortie;
+            grille[99][t+i] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[99][t+i].type=TypeParcelle.Sortie;
+            grille[98][t+i] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[98][t+i].type=TypeParcelle.Sortie;
+            grille[t+i][0] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[t+i][0].type=TypeParcelle.Sortie;
+            grille[t+i][1] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[t+i][1].type=TypeParcelle.Sortie;
+            grille[t+i][99] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[t+i][99].type=TypeParcelle.Sortie;
+            grille[t+i][98] = new Parcelle(grille, 0, i+t, TypeParcelle.Terrain);
+            grille[t+i][98].type=TypeParcelle.Sortie;
+        }
     }
 
     /**
      * fonction pour ajouter un tresor a trouver avant de pouvoir utiliser la sortie
      */
     void ajouterTresor() {
-        int x = (int)(Math.random()*taille);
+        int i = (int)(Math.random()*taille);
         int y = (int)(Math.random()*taille);
 
-        grille[x][y] = new Parcelle(grille, x, y, TypeParcelle.Tresor);
-        grille[x][y].type = TypeParcelle.Tresor;
+        grille[i][y] = new Parcelle(grille, i, y, TypeParcelle.Tresor);
+        grille[i][y].type = TypeParcelle.Tresor;
 
     }
-
-    /*
-    public void mettreAJourEclairage(Intrus intrus) {
-        int intrusX = intrus.parcelle.x;
-        int intrusY = intrus.parcelle.y;
-
-        if (Math.abs(intrusX - x) <= 2 && Math.abs(intrusY - y) <= 2) {
-            illumine = true;
-            ImgParcelle.mettreAJourCouleur(, illumine); // Mettre à jour la couleur de l'élément graphique
-        } else {
-            illumine = false;
-            couleur = Color.BLACK; // Si la parcelle n'est pas éclairée, définir la couleur sur noir
-            ImgParcelle.mettreAJourCouleur(,illumine); // Mettre à jour la couleur de l'élément graphique
-        }
-    }
-    public Color getCouleur() {
-        return couleur;
-    }
-     */
 }

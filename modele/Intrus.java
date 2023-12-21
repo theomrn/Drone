@@ -43,12 +43,12 @@ public class Intrus {
     public void bougerVersDirection() throws InterruptedException {
         Parcelle prochaineParcelle = getParcelleDir(d);
 
-        if (prochaineParcelle.getType() != TypeParcelle.Arbre) {
-            if (prochaineParcelle.getType() == TypeParcelle.Tresor) {
-                tresorTrouve = true;
-                System.out.println("Tresor trouve");
-                System.out.println(tresorTrouve);
-            }
+        if (prochaineParcelle.getType() == TypeParcelle.Tresor) {
+            tresorTrouve = true;
+            System.out.println("TRESOR TROUVE");
+        }
+
+        if (prochaineParcelle.getType() != TypeParcelle.Arbre && prochaineParcelle.getType() != TypeParcelle.Arbre2) {
             parcelle = prochaineParcelle;
             evt.bougerIntrus(this);
             // Détecter les drones proches
@@ -107,6 +107,35 @@ public class Intrus {
                         }
                     }
                     if (distance(parcelle, drone.parcelle) < distanceDetection) {
+                        Platform.runLater(() -> {
+                            System.out.println("Perdu ! Resté à proximité du drone pendant trop longtemps !");
+                            perdu();
+                            fermerApplication();
+                        });
+                    }
+                }).start();
+            }
+        }
+
+        for (petitDrone petitDrone : evt.lesPetitDrones) {
+            int distanceX = Math.abs(parcelle.x - petitDrone.parcelle.x);
+            int distanceY = Math.abs(parcelle.y - modele.petitDrone.parcelle.y);
+
+            int distance = Math.max(distanceX, distanceY);
+
+            if (distance < distanceDetection) {
+
+                new Thread(() -> {
+                    long debutDetection = System.currentTimeMillis();
+
+                    while (System.currentTimeMillis() - debutDetection < dureeDetection) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (distance(parcelle, petitDrone.parcelle) < distanceDetection) {
                         Platform.runLater(() -> {
                             System.out.println("Perdu ! Resté à proximité du drone pendant trop longtemps !");
                             perdu();

@@ -1,6 +1,5 @@
 package modele;
 
-import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -26,9 +25,6 @@ public class Drone {
 
     /**sa representation graphique associee (simple cercle)*/
     Circle circle;
-    boolean intrusTrouvé = false;
-    int x ;
-    int y;
 
     public Drone(Environnement  evt, int x, int y) {
         this.evt = evt;
@@ -38,31 +34,15 @@ public class Drone {
 
     void errer()
     {
-        if (!intrusTrouvé) {
-            d = d.nextDirection();
-            Parcelle prochaineParcelle = getParcelleDir(d);
-            if (prochaineParcelle.getType() != TypeParcelle.Arbre){
-                evt.bougerDrone(this);
-                parcelle = getParcelleDir(d);
-            }
-
-            // detecterIntrusProches();
-        }
-        else {
-            //cheminVersIntrus();
-        }
-    }
-/*
-    void cheminVersIntrus() {
         d = d.nextDirection();
-        parcelle = getParcelleDir(d);
-        //if (!(distance(getParcelleDir(d, intrus) < distance(getParcelleDir(d, drone)))) {
-            d = d.nextDirection();
-            parcelle = getParcelleDir(d);
+        Parcelle prochaineParcelle = getParcelleDir(d);
+        if (prochaineParcelle.getType() != TypeParcelle.Arbre) {
+            parcelle = prochaineParcelle;
+            evt.bougerDrone(this);
         }
-        evt.bougerDrone(this);
     }
-*/
+
+
     private Parcelle getParcelleDir(Direction dir)
     {
         int x = Math.max(0, Math.min(evt.taille - 1, parcelle.x + dir.x));
@@ -75,22 +55,5 @@ public class Drone {
         this.circle = circle;
         circle.setFill(coulDrone);
         circle.setRadius(4);
-    }
-
-    private void detecterIntrusProches() {
-        int distanceDetection = 3;
-
-        for (Drone drone : evt.lesDrones) {
-            int distanceX = Math.abs(parcelle.x - drone.parcelle.x);
-            int distanceY = Math.abs(parcelle.y - drone.parcelle.y);
-
-            int distance = Math.max(distanceX, distanceY);
-
-            if (distance < distanceDetection) {
-                intrusTrouvé = true;
-                x = drone.parcelle.x;
-                y = drone.parcelle.y;
-            }
-        }
     }
 }

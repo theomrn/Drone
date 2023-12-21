@@ -9,10 +9,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.*;
-
 
 public class SimuDrone extends Application {
     /**
@@ -32,8 +32,9 @@ public class SimuDrone extends Application {
     /** heuteur du terrain en pixel*/
     int hauteur = 600;
     /** délai en ms entre chaque etape de simulation*/
-    int nbdrone=10;
-    int nbdrone2=5;
+    int nbdrone=5;
+    int nbdrone2 = 5;
+    private Rectangle overlay;
 
     public static int tempo = 100;
     /** troupe des elements graphiques*/
@@ -76,7 +77,8 @@ public class SimuDrone extends Application {
         {
             addDrone();
         }
-        for (int j = 0; j < nbdrone2; j++) {
+        for(int i=0;i<nbdrone2;i++)
+        {
             addpetitDrone();
         }
         addIntrus();
@@ -120,14 +122,23 @@ public class SimuDrone extends Application {
                 }
             }
         });
+        overlay = new Rectangle(largeur, hauteur, Color.BLACK);
+        troupe.getChildren().add(overlay);
+        overlay.toFront();  // Placer l'overlay au-dessus de la carte principale
+
+        // Révéler initialement la carte inférieure
+        revealInitialMap();
     }
 
-    /**
-     * selon la touche :
-     * f ajoute une fourmis dans le nid
-     * d demarre l'animation
-     * p pause l'animation
-     * */
+    private void revealInitialMap() {
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
+                // Ajuster l'opacité de l'overlay pour révéler la carte inférieure initialement
+                cases[i][j].getImg().ajusterOpaciteOverlay(0);
+            }
+        }
+    }
+
     void agirSelonTouche(String touche, Timeline chrono)
     {
         switch (touche)
@@ -170,7 +181,41 @@ public class SimuDrone extends Application {
 
     public void addIntrus()
     {
-        Intrus f = evt.addIntrus(taille/2,taille/2);
+        int randomBorder = (int) (Math.random() * 4);
+        int x, y;
+
+        switch (randomBorder) {
+            case 0: // Bord supérieur
+                x = (int) (Math.random() * taille);
+                y = 0;
+                break;
+            case 1: // Bord droit
+                x = taille - 1;
+                y = (int) (Math.random() * taille);
+                break;
+            case 2: // Bord inférieur
+                x = (int) (Math.random() * taille);
+                y = taille - 1;
+                break;
+            case 3: // Bord gauche
+                x = 0;
+                y = (int) (Math.random() * taille);
+                break;
+            default:
+                x = taille / 2;
+                y = taille / 2;
+                break;
+        }
+
+        Intrus f = evt.addIntrus(x, y);
+        Circle c = new Circle((x * largeur) / taille + 3 * espace / 2, (y * largeur) / taille + 3 * espace / 2, espace);
+        f.setCircle(c);
+        troupe.getChildren().add(c);
+    }
+
+    public void addpetitDrone()
+    {
+        petitDrone f = evt.addPetitDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
         Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
         f.setCircle(c);
         troupe.getChildren().add(c);
@@ -193,17 +238,8 @@ public class SimuDrone extends Application {
         timeline.play();
     }
 
-    public void addpetitDrone()
-    {
-        petitDrone f = evt.addPetitDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
-        Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
-        f.setCircle(c);
-        troupe.getChildren().add(c);
-    }
-
     /**methode principale*/
     public static void main(String[] args) {
         launch(args);
     }
-
 }
