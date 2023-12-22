@@ -13,8 +13,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.*;
+import javafx.scene.control.Alert;
 
-import static modele.petitDrone.parcelle;
+import java.util.ArrayList;
+
 
 public class SimuDrone extends Application {
     /**
@@ -33,12 +35,16 @@ public class SimuDrone extends Application {
     int largeur = 600;
     /** heuteur du terrain en pixel*/
     int hauteur = 600;
-    /** délai en ms entre chaque etape de simulation*/
+    /** nombre de drones **/
     int nbdrone=5;
+    // nombre de drones 2
     int nbdrone2 = 5;
-    private Rectangle overlay;
-
-    public static int tempo = 100;
+    // boolean pour dire si le joueur est detecté
+    public static boolean isSpotted=false;
+    // coordonnees du joueur
+    public static ArrayList<Integer> coSpotted;
+    // tempo
+    public static int tempo = 150;
     /** troupe des elements graphiques*/
     Group troupe;
 
@@ -47,6 +53,7 @@ public class SimuDrone extends Application {
     public void start(Stage primaryStage) {
         taille = 100;
         construireScene(primaryStage);
+        coSpotted = new ArrayList<>();
     }
 
     /**
@@ -73,8 +80,10 @@ public class SimuDrone extends Application {
                 event -> evt.avancer()));
         littleCycle.setCycleCount(Timeline.INDEFINITE);
         littleCycle.play();
+        regle();
         //ecoute de evenements claviers
         scene.setOnKeyTyped(e->agirSelonTouche( e.getCharacter(), littleCycle));
+        // ajoute les drones
         for(int i=0;i<nbdrone;i++)
         {
             addDrone();
@@ -83,10 +92,13 @@ public class SimuDrone extends Application {
         {
             addpetitDrone();
         }
+        // ajoute l'intrus
         addIntrus();
+
         Intrus intrus = evt.getIntrus();
         Circle dessinIntrus = intrus.getDessin();
         dessinIntrus.requestFocus();
+        // gestion des mouvements de l'intrus
         dessinIntrus.setOnKeyPressed(e->{
             System.err.println(e.getCode());
             switch(e.getCode()) {
@@ -129,6 +141,7 @@ public class SimuDrone extends Application {
 
     void agirSelonTouche(String touche, Timeline chrono)
     {
+        // fonction garder des fourmis permet de mettre le jeu sur pause pour des tests par exemple
         switch (touche)
         {
             case "d"->chrono.play();
@@ -158,7 +171,7 @@ public class SimuDrone extends Application {
                 img.choisirCouleur();
     }
 
-    /**ajout d'une fourmis et de son image (cercle) au centre de la grille*/
+    /**ajout d'un drone et de son image (cercle) de façon aléatoire */
     public void addDrone()
     {
         Drone f = evt.addDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
@@ -167,12 +180,23 @@ public class SimuDrone extends Application {
         troupe.getChildren().add(c);
     }
 
+    public void regle()
+    {
+        // affiche les controles
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Les contrôles sont :");
+        alert.setContentText("Z pour avancer\nS pour reculer\nQ pour aller à gauche\nD pour aller à droite\n");
+        alert.showAndWait();
+    }
+
     public void addIntrus()
     {
+        // ajoute l'intrus
         int randomBorder = (int) (Math.random() * 4);
         int x, y;
 
         switch (randomBorder) {
+            // choisis un bord ou ajouter l'intrus
             case 0: // Bord supérieur
                 x = (int) (Math.random() * taille);
                 y = 0;
@@ -203,6 +227,7 @@ public class SimuDrone extends Application {
 
     public void addpetitDrone()
     {
+        // ajout les drones qui ne peuvent passsé sur aucun arbres
         petitDrone f = evt.addPetitDrone((int) (Math.random()*taille), (int) (Math.random()*taille));
         Circle c = new Circle(largeur/2d + 3*espace/2d, largeur/2d+ 3*espace/2d, espace);
         f.setCircle(c);
@@ -219,10 +244,10 @@ public class SimuDrone extends Application {
         Timeline timeline = new Timeline();
         int xdest = (xx*largeur) / taille + 3*espace/2;
         int ydest = (yy*largeur) / taille + 3*espace/2;
-        KeyFrame bougeFourmi = new KeyFrame(new Duration(tempo),
+        KeyFrame bougeDrone = new KeyFrame(new Duration(tempo),
                 new KeyValue(c.centerXProperty(), xdest),
                 new KeyValue(c.centerYProperty(), ydest));
-        timeline.getKeyFrames().add(bougeFourmi);
+        timeline.getKeyFrames().add(bougeDrone);
         timeline.play();
     }
 

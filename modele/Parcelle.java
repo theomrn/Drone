@@ -6,7 +6,7 @@ import gui.ImgParcelle;
  * cette classe represente une parcelle de terrain
  * La parcelle peut etre de type herbe, nid, nourriture, et contenir de la pheromone
  *
- * @author Emmanuel Adam
+ * @author Emmanuel Adam Morneau Théo Molin Quentin Pilot Lucas
  */
 public class Parcelle {
     /**taux de dillution de la pheromone*/
@@ -14,11 +14,9 @@ public class Parcelle {
     /**type de la parcelle*/
     TypeParcelle type;
     /**coordonnee x de la parcelle dans la grille*/
-    public final int x;
+    public int x;
     /**coordonnee y de la parcelle dans la grille*/
-    public final int y;
-
-    /**dose de nourriture*/
+    public int y;
     /** reference a la grille des parcelles*/
     Parcelle[][] grille;
     /**representation graphique associee*/
@@ -46,11 +44,19 @@ public class Parcelle {
     }
 
 
+    /**
+     * Sets the ImgParcelle object for this class.
+     *
+     * @param  img  the ImgParcelle object to set
+     */
     public void setImg(ImgParcelle img) {
         this.img = img;
     }
 
-    public TypeParcelle getType() { return type; }
+    public TypeParcelle getType() {
+        // retourne le type de la parcelle
+        return type;
+    }
 
     @Override
     public String toString() {

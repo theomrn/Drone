@@ -1,7 +1,5 @@
 package modele;
 
-import javax.xml.stream.events.NotationDeclaration;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -10,8 +8,9 @@ import java.util.Random;
  * chaque enumeration contient son vecteur directeur
  * (ex. un deplacement N implique un d�placement de 0 en x, -1 en y
  * un deplacement SE implique un d�placement de 1 en x, 1 en y)
+ * @author Morneau Théo Molin Quentin Pilot Lucas Emmanuel Adam
  */
-public enum Direction {N(0,-1), E(1,0), S(0,1), O(-1,0);
+public enum Direction {N(0,-1), E(1,0), S(0,1), O(-1,0),NE(1,-1),NO(-1,-1),SE(1,1),SO(-1,1);
     int x;
     int y;
     /**objet utilise pour choix aleatoire*/
@@ -35,15 +34,4 @@ public enum Direction {N(0,-1), E(1,0), S(0,1), O(-1,0);
     static Direction getRandom() {
         return Direction.values()[(int)(Math.random()*Direction.values().length)];
     }
-
-    /**retourne la direction inverse a la direction actuelle
-     * ex. retourne NE si dir=SO*/
-    Direction inverse()
-    {
-        int no = this.ordinal();
-        no=(no+2)%4;
-        return Direction.values()[no];
-    }
-
-
 }
