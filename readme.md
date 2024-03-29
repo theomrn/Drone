@@ -23,8 +23,4 @@ Le code pour ajouter les sorties n'est pas optimiser .
 On peut facilement ajouter un ajout de drones au fur et a messure de la partie ainsi que l'augmentation de leurs vitesses.
 L'interface est assez minimal et donc peut etre améliorer
 
-Ce tp a été réaliser par Théo Morneau Quentin Molin et Lucas Pilot le tout sur base du tp fourmis , ce dernier n'est pas dans notre groupe mais a prit une part non négligable au developpement de notre projet 
-D'ailleur il a du rendre le meme code que nous , cela est normal . Si vous demander une preuve que le tp a bien été réaliser a 3 vous avez ici mon historique :
-https://github.com/theomrn/Drone/edit/main/
 
-Je peux vous fournir aussi des captures d'écran de nos échange discord qui prouve que nous avons tous les 3 travailer sur ce projet.
