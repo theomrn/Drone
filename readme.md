@@ -1,3 +1,5 @@
+Projet scolaire : 
+
 Voici notre projet de Java 
 
 Le jeu fait apparaitre le joueur (intrus) sur l'un des bords de la carte.
